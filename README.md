@@ -3,4 +3,4 @@ You'll first need to create a hCaptcha account, you can do that by clicking [her
 In `/main.py`, enter your sitekey and secret into the empty constants, and do the same with your sitekey in `/frontend/authentication.js`.
 After that, install the requirements from `/requirements.txt`.
 # Demo
-I'm hosting it on [https://coolpasswordmanager.xyz](https://dashboard.hcaptcha.com/signup) to be tried out.
+I'm hosting it on [coolpasswordmanager.xyz](https://coolpasswordmanager.xyz) to be tried out.
