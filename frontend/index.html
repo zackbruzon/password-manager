@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <!-- Sets the title of the tab -->
+        <title>Password Manager</title>
+
+        <!-- Sets the stylesheet for the page -->
+        <link rel="stylesheet" href="/style.css">
+
+        <style>
+            h1 {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            h3 {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            p {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            button {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            .signUpTip {
+                border: 1%;
+                border-color: black;
+                border-style: outset;
+                border-radius: 10%;
+                width: 20%;
+                margin-left: 40%;
+            }
+        </style>
+
+        <!-- Loads the script shown above this -->
+        <script src="/authentication.js"></script>
+
+        <!-- Taken from hCaptcha's documentation, where render=explicit makes it so the captcha doesn't load when the script loads -->
+        <script src="https://js.hcaptcha.com/1/api.js?render=explicit" async defer></script>
+    </head>
+
+    <body style="text-align: center;">
+        <h1>Password Manager</h1>
+        <hr>
+
+        <!-- Elements for the form for logging in -->
+        <div id="logInForm">
+            <h3>Log In</h3>
+
+            <p>
+                Username
+                <br>
+                <input id="logInUsername"></input>
+            </p>
+
+            <p>
+                Password
+                <br>
+                <input id="logInPassword" type="password"></input>
+            </p>
+
+            <p>
+                2FA Code (leave blank if none)
+                <br>
+                <input id="logIn2FACode"></input>
+            </p>
+
+            <div id="logInCaptcha" data-callback="logIn"></div>
+            
+            <button id="logInButton" onclick="getCaptcha(1);">Submit</button>
+        </div>
+        
+        <div id="or">
+            <hr>
+            <h1>Or...</h1>
+            <hr>
+        </div>
+
+        <!-- Elements for the form for signing up -->
+        <div id="signUpForm">
+            <h3>Sign Up</h3>
+
+            <p>
+                Username
+                <br>
+                <input id="signUpUsername" onfocusin="showUsernameTip();" onfocusout="hideUsernameTip();"></input>
+            </p>
+            
+            <div class="signUpTip" hidden="" id="usernameTip">
+                <p>
+                    Usernames must...<br><br>
+                    be from 3 to 20 characters long<br>
+                    only contain letters and numbers<br>
+                    not already be taken<br>
+                </p>
+            </div>
+
+            <p>
+                Password
+                <br>
+                <input id="signUpPassword1" type="password" onfocusin="showPasswordTip();" onfocusout="hidePasswordTip();"></input>
+            </p>
+
+            <div class="signUpTip" hidden="" id="passwordTip">
+                <p>
+                    Passwords must...<br><br>
+                    be from 8 to 32 characters long<br>
+                </p>
+            </div>
+
+            <p>
+                Confirm Password
+                <br>
+                <input id="signUpPassword2" type="password"></input>
+            </p>
+
+            <div id="signUpCaptcha" data-callback="signUp"></div>
+
+            <button id="signUpButton" onclick="getCaptcha(2);">Submit</button>
+        </div>
+    </body>
+</html>

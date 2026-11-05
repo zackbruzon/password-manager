@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <!-- Sets the title of the tab -->
+        <title>Password Manager</title>
+
+        <!-- Sets the stylesheet for the page -->
+        <link rel="stylesheet" href="style.css">
+
+        <!-- Imports FontAwesome icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+
+        <style>
+            h1, h4, a, label {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            h3 {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            p {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            button {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            .signUpTip {
+                border: 1%;
+                border-color: black;
+                border-style: outset;
+                border-radius: 10%;
+                width: 20%;
+                margin-left: 40%;
+            }
+        </style>
+
+        <!-- Loads the script shown above this -->
+        <script src="dashboard.js" defer></script>
+
+        <!-- Taken from hCaptcha's documentation, where render=explicit makes it so the captcha doesn't load when the script loads -->
+        <script src="https://js.hcaptcha.com/1/api.js?render=explicit" async defer></script>
+    </head>
+
+    <body style="text-align: center;">
+        <h1>Password Manager</h1>
+        <hr>
+        <h3>Pages</h3>
+        <button onclick="showCreatePassword();">Create Password</button>
+        <button onclick="showPasswordList();">View Passwords</button>
+        <button onclick="showSettings();">Settings</button>
+        <button onclick="logOut();">Log Out</button>
+        <hr>
+
+        <!-- Form for making a password -->
+        <div id="passwordCreation" hidden>
+            <h3>Create Password</h3>
+            <br>
+
+            <p>
+                Name
+                <br>
+                <input id="passwordName"></input>
+            </p>
+
+            <p>
+                Icon
+                <br>
+                <select id="passwordIcon">
+                    <option value="none">None</option>
+                </select>
+            </p>
+            
+            <input type="checkbox" id="useGeneratedPassword" onclick="passwordTypeChanged();">
+            <label for="useGeneratedPassword">Use generated password</label>
+
+            <p id="userPassword">
+                Password
+                <br>
+                <input id="passwordValue" type="password"></input>
+            </p>
+
+            <div id="generatedPassword" hidden>
+                <p>
+                    Password
+                    <br>
+                    <input id="generatedPasswordValue" disabled></input>
+                </p>
+
+                <p>
+                    Configuration
+                    <br>
+                    <input style="width: 10%;" type="number" min="0" max="64" id="letterCount" placeholder="Letters (1-64)" onchange="generatePassword();">
+                    <br>
+                    <input style="width: 10%;" type="number" min="0" max="64" id="numberCount" placeholder="Numbers (1-64)" onchange="generatePassword();">
+                    <br>
+                    <input style="width: 10%;" type="number" min="0" max="64" id="punctuationCount" placeholder="Punctuation (1-64)" onchange="generatePassword();">
+                </p>
+            </div>
+
+            <button id="passwordButton" onclick="createPassword();">Create Password</button>
+        </div>
+
+        <!-- Elements for the password list -->
+        <div id="passwordList">
+            <h3>Passwords</h3>
+            <p id="loadingMessage">Loading...</p>
+        </div>
+
+        <!-- Elements for the settings page -->
+        <div id="settings" hidden>
+            <h3>Settings</h3>
+            <br>
+
+            <div id="enable2FA">
+                <h4>Enable Two-Factor Authentication</h4>
+
+                <p>
+                    Secret
+                    <br>
+                    <input id="enable2FASecret" value="test secret" disabled></input>
+                </p>
+
+                <p>
+                    6-Digit Code
+                    <br>
+                    <input id="enable2FACode"></input>
+                </p>
+
+                <button id="enable2FAButton" onclick="enable2FA();">Enable</button>
+            </div>
+
+            <div id="disable2FA" hidden>
+                <h4>Disable Two-Factor Authentication</h4>
+
+                <p>
+                    6-Digit Code
+                    <br>
+                    <input id="disable2FACode"></input>
+                </p>
+
+                <button id="disable2FAButton" onclick="disable2FA();">Disable</button>
+            </div>
+
+            <br>
+            <br>
+            
+            <h4>Change Password</h4>
+
+            <p>
+                Old Password
+                <br>
+                <input id="changePasswordOld" type="password"></input>
+            </p>
+
+            <p>
+                New Password
+                <br>
+                <input id="changePasswordNew1" type="password" onfocusin="showPasswordTip();" onfocusout="hidePasswordTip();"></input>
+            </p>
+
+            <div class="signUpTip" hidden="" id="passwordTip">
+                <p>
+                    Passwords must...<br><br>
+                    be from 8 to 32 characters long<br>
+                </p>
+            </div>
+
+            <p>
+                Confirm New Password
+                <br>
+                <input id="changePasswordNew2" type="password"></input>
+            </p>
+
+            <button id="changePasswordButton" onclick="changePassword();">Submit</button>
+
+            <br>
+            <br>
+
+            <h4>Change Session Inactivity Threshold</h4>
+
+            <p>
+                This is how long you need to be inactive to be automatically logged out.
+                <br>
+                <br>
+                New Session Inactivity Threshold
+                <br>
+                <input id="sessionInactivityThreshold" placeholder="Default: 3600 seconds"></input>
+            </p>
+
+            <button onclick="setSessionInactivityThreshold();">Submit</button>
+        </div>
+    </body>
+</html>
